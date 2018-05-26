@@ -56,6 +56,11 @@ public class TimeRecord
   {
     shared = s;
   }
+  public static TimeRecordAuto openAuto(String label)
+  {
+    if (shared==null) return null;
+    return new TimeRecordAuto(label);
+  }
 
   public static void record(long start, String name)
   {
