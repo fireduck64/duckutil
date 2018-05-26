@@ -29,10 +29,7 @@ public class TimeRecord
       if (prev != null) p = prev;
 
       counts.put(name, p + count);
-
-
     }
-
   }
 
   public synchronized void printReport(PrintStream out)
@@ -46,7 +43,6 @@ public class TimeRecord
       double seconds = nanosec / 1e9;
       out.println("  " + name + " - " + df.format(seconds) + " seconds " + counts.get(name) + " calls");
     }
-
   }
 
   public synchronized void reset()
@@ -71,9 +67,6 @@ public class TimeRecord
     {
       shared.addTime(System.nanoTime() - start, name, count);
     }
-
   }
-
-
 }
 
