@@ -50,6 +50,15 @@ public abstract class Config
         return Double.parseDouble(get(key));
     }
 
+    public double getDoubleWithDefault(String key, double def)
+    {
+      if (isSet(key))
+      {
+        return getDouble(key);
+      }
+      return def;
+    }
+
     public List<String> getList(String key)
     {
         String big_str = get(key);
