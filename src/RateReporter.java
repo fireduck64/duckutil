@@ -23,10 +23,21 @@ public class RateReporter
   public String getReport(DecimalFormat df)
   {
     return String.format("1-min: %s, 5-min: %s, hour: %s", 
-    df.format(min.getRatePerSecond()),
-    df.format(min5.getRatePerSecond()),
-    df.format(hour.getRatePerSecond()));
+    getRate(min, df),
+    getRate(min5, df),
+    getRate(hour, df));
+  }
 
+  public String getRate(RateTracker r, DecimalFormat df)
+  {
+    double rt = r.getRatePerSecond();
+    String unit="";
+    if (rt > 1000) { rt = rt / 1e3; unit = "K"; }
+    if (rt > 1000) { rt = rt / 1e3; unit = "M"; }
+    if (rt > 1000) { rt = rt / 1e3; unit = "G"; }
+    if (rt > 1000) { rt = rt / 1e3; unit = "T"; } 
+
+    return String.format("%s%s/s", df.format(rt), unit);
   }
 
 }
