@@ -6,6 +6,7 @@ public class RateReporter
 {
   private RateTracker min = new RateTracker(60L * 1000L);
   private RateTracker min5 = new RateTracker(60L * 5L * 1000L);
+  private RateTracker min15 = new RateTracker(60L * 15L * 1000L);
   private RateTracker hour = new RateTracker(60L * 60L * 1000L);
 
   public RateReporter()
@@ -17,14 +18,22 @@ public class RateReporter
   {
     min.record(count);
     min5.record(count);
+    min15.record(count);
     hour.record(count);
   }
 
-  public String getReport(DecimalFormat df)
+  public String getReportShort(DecimalFormat df)
   {
     return String.format("1-min: %s, 5-min: %s, hour: %s", 
     getRate(min, df),
     getRate(min5, df),
+    getRate(hour, df));
+  }
+  public String getReportLong(DecimalFormat df)
+  {
+    return String.format("5-min: %s, 15-min: %s, hour: %s", 
+    getRate(min5, df),
+    getRate(min15, df),
     getRate(hour, df));
   }
 
