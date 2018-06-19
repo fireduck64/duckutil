@@ -49,4 +49,10 @@ public class RateReporter
     return String.format("%s%s/s", df.format(rt), unit);
   }
 
+  public boolean isZero()
+  {
+    return (hour.getTotal() == 0L);
+
+  }
+
 }
