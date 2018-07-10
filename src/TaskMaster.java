@@ -13,15 +13,31 @@ import java.util.ArrayList;
 public class TaskMaster<V>
 {
   private ArrayList<FutureTask<V> > futures = new ArrayList<>();
+  private Executor exec;
 
   public TaskMaster(List<Callable<V> > action_list, Executor exec)
   {
+    this.exec = exec;
     for(Callable<V> c : action_list)
     {
       FutureTask<V> ft = new FutureTask<V>(c);
       futures.add(ft);
       exec.execute(ft);
     }
+  }
+  public TaskMaster(Executor exec)
+  {
+    this.exec = exec;
+
+  }
+  public void addTask(Callable<V> c)
+  {
+      FutureTask<V> ft = new FutureTask<V>(c);
+      synchronized(futures)
+      {
+        futures.add(ft);
+      }
+      exec.execute(ft);
   }
 
   public static ThreadPoolExecutor getBasicExecutor(int threads, String name)
