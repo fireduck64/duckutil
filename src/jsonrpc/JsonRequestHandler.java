@@ -1,4 +1,4 @@
-package snowblossom.client;
+package duckutil.jsonrpc;
 
 import com.thetransactioncompany.jsonrpc2.JSONRPC2Error;
 import com.thetransactioncompany.jsonrpc2.JSONRPC2Request;

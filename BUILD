@@ -16,7 +16,7 @@ java_library(
 )
 
 java_library(
-  name = "duck_rpc",
+  name = "duckutil_jsonrpc_lib",
   srcs = glob(["src/jsonrpc/*.java"]),
   deps = [
     ":duckutil_lib",
