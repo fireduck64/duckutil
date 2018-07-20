@@ -32,17 +32,34 @@ public class JsonRpcServer
   private final AuthAgent auth;
 
   private final Dispatcher dispatcher;
+  private boolean skipauth=false;
 
+  
   public JsonRpcServer(Config config)
+		throws Exception
+  {
+    this(config, true);
+  }
+
+  public JsonRpcServer(Config config, boolean use_auth)
 		throws Exception
   {
 		this.config = config;
 
     config.require("rpc_port");
-    config.require("rpc_username");
-    config.require("rpc_password");
 
-    auth = new AuthAgent();
+    if (use_auth)
+    {
+      config.require("rpc_username");
+      config.require("rpc_password");
+
+      auth = new AuthAgent();
+    }
+    else
+    {
+      skipauth=true;
+      auth = null;
+    }
 
     int listen_port = config.getInt("rpc_port");
     String listen_host = config.getWithDefault("rpc_host", "localhost");
@@ -72,7 +89,22 @@ public class JsonRpcServer
       PrintStream print_out = new PrintStream(b_out);
 
       int code = 200;
-      if (!(auth.authenticate(t) instanceof Authenticator.Success))
+
+      boolean auth_ok=false;
+
+      if (skipauth)
+      {
+        auth_ok=true;
+      }
+      else
+      {
+        if (auth.authenticate(t) instanceof Authenticator.Success)
+        {
+          auth_ok=true;
+        }
+      }
+
+      if (!auth_ok)
       {
         code=401;
         print_out.println("http basic auth required");
