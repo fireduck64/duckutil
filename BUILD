@@ -15,6 +15,19 @@ java_library(
   ],
 )
 
+java_library(
+  name = "duck_rpc",
+  srcs = glob(["src/jsonrpc/*.java"]),
+  deps = [
+    ":duckutil_lib",
+    "@jsonrpc2_server//jar",
+    "@jsonrpc2_base//jar",
+    "@json_smart//jar",
+    "@accessors_smart//jar",
+    "@asm//jar",
+  ],
+)    
+
 java_test(
   name = "ziptest",
   srcs = ["test/ZipTest.java"],
