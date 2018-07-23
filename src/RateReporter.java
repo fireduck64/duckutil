@@ -1,6 +1,8 @@
 package duckutil;
 
 import java.text.DecimalFormat;
+import java.util.TreeMap;
+import java.util.Map;
 
 public class RateReporter
 {
@@ -35,6 +37,17 @@ public class RateReporter
     getRate(min5, df),
     getRate(min15, df),
     getRate(hour, df));
+  }
+
+  public Map<Long, Double> getRawRates()
+  {
+    TreeMap<Long, Double> m = new TreeMap<>();
+    m.put(min.getKeepBackMs(), min.getRatePerSecond());
+    m.put(min5.getKeepBackMs(), min5.getRatePerSecond());
+    m.put(min15.getKeepBackMs(), min15.getRatePerSecond());
+    m.put(hour.getKeepBackMs(), hour.getRatePerSecond());
+
+    return m;
   }
 
   public String getRate(RateTracker r, DecimalFormat df)

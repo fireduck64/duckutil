@@ -46,6 +46,11 @@ public class RateTracker
     return total_d / back_sec;
   }
 
+  public long getKeepBackMs()
+  {
+    return keep_back_ms;
+  }
+
 
   public class RateEntry
   {
