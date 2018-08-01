@@ -46,3 +46,14 @@ maven_jar(
   sha1 = "1b6c4ff09ce03f3052429139c2a68e295cae6604",
 )
 
+maven_jar(
+  name = "commons_pool",
+  artifact = "commons-pool:commons-pool:1.6",
+  sha1 = "4572d589699f09d866a226a14b7f4323c6d8f040",
+)
+
+maven_jar(
+  name = "commons_dbcp",
+  artifact = "commons-dbcp:commons-dbcp:1.4",
+  sha1 = "30be73c965cc990b153a100aaaaafcf239f82d39",
+)

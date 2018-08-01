@@ -28,6 +28,15 @@ java_library(
   ],
 )    
 
+java_library(
+  name = "sql_lib",
+  srcs = glob(["src/sql/*.java"]),
+  deps = [
+    "@commons_pool//jar",
+    "@commons_dbcp//jar",
+  ],
+)
+
 java_test(
   name = "ziptest",
   srcs = ["test/ZipTest.java"],
