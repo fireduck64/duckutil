@@ -1,5 +1,6 @@
 package duckutil.sql;
 
+import duckutil.Config;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -29,6 +30,23 @@ public class DBUtil
         {
             throw new SQLException("Unable to load driver: " + driver);
         }
+    }
+
+    public static void openConnectionPool(String pool_name, Config config)
+        throws SQLException
+    {
+      config.require(pool_name +"_db_driver");
+      config.require(pool_name +"_db_uri");
+      config.require(pool_name +"_db_username");
+      config.require(pool_name +"_db_password");
+
+      openConnectionPool(pool_name, 
+        config.get(pool_name + "_db_driver"),
+        config.get(pool_name + "_db_uri"),
+        config.get(pool_name + "_db_username"),
+        config.get(pool_name + "_db_password"),
+        config.getIntWithDefault(pool_name +"_db_max_active", 16),
+        config.getIntWithDefault(pool_name +"_db_max_idle", 4));
     }
 
     public static void openConnectionPool(String pool_name, String driver_class, String uri, String user, String pass, int max_active, int max_idle)

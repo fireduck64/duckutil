@@ -34,6 +34,7 @@ java_library(
   deps = [
     "@commons_pool//jar",
     "@commons_dbcp//jar",
+    ":duckutil_lib",
   ],
 )
 
