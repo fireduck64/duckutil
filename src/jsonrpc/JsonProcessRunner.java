@@ -17,7 +17,7 @@ public class JsonProcessRunner extends ProcessRunner
     throws Exception
   {
      JSONParser parser = new JSONParser(JSONParser.MODE_STRICTEST);
-     JSONObject json = (JSONObject)parser.parse(getOutput());
+     JSONObject json = (JSONObject)parser.parse(getOutput().trim());
      return json;
   }
 }
