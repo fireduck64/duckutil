@@ -3,6 +3,7 @@ package duckutil;
 import java.util.Collection;
 import java.io.InputStream;
 import java.util.Scanner;
+import java.util.ArrayList;
 
 /**
  * Runs a process and keeps the standard output and standard error as a string.
@@ -17,7 +18,13 @@ public class ProcessRunner
   public ProcessRunner(Collection<String> cmd)
     throws Exception
   {
-    Process proc = Runtime.getRuntime().exec((String[])cmd.toArray());
+    ArrayList<String> lst = new ArrayList<>(cmd);
+    String[] args = new String[cmd.size()];
+    for(int i=0; i<cmd.size(); i++)
+    {
+      args[i] = lst.get(i);
+    }
+    Process proc = Runtime.getRuntime().exec(args);
 
     err_out = new StringBuilder();
     std_out = new StringBuilder();
