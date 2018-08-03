@@ -54,7 +54,7 @@ public abstract class PeriodicThread extends Thread
     stopped=true;
   }
 
-  public abstract void runPass();
+  public abstract void runPass() throws Exception;
 
 
 }
