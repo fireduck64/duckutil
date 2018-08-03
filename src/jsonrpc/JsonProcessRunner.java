@@ -2,6 +2,7 @@ package duckutil.jsonrpc;
 
 import net.minidev.json.parser.JSONParser;
 import net.minidev.json.JSONObject;
+import net.minidev.json.JSONArray;
 import duckutil.ProcessRunner;
 import java.util.Collection;
 
@@ -18,6 +19,14 @@ public class JsonProcessRunner extends ProcessRunner
   {
      JSONParser parser = new JSONParser(JSONParser.MODE_STRICTEST);
      JSONObject json = (JSONObject)parser.parse(getOutput().trim());
+     return json;
+  }
+
+  public JSONArray getJsonArray()
+    throws Exception
+  {
+     JSONParser parser = new JSONParser(JSONParser.MODE_STRICTEST);
+     JSONArray json = (JSONArray)parser.parse(getOutput().trim());
      return json;
   }
 }
