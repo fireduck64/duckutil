@@ -38,6 +38,14 @@ java_library(
   ],
 )
 
+java_binary(
+  name = "atomic_load",
+  main_class = "duckutil.AtomicLoad",
+  runtime_deps = [
+    ":duckutil_lib",
+  ],
+)
+
 java_test(
   name = "ziptest",
   srcs = ["test/ZipTest.java"],
