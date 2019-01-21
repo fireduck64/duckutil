@@ -58,6 +58,17 @@ java_test(
 )
 
 java_test(
+  name = "fustiontest",
+  srcs = ["test/FusionInitiatorTest.java"],
+  test_class = "FusionInitiatorTest",
+  size = "medium",
+  deps = [
+    ":duckutil_lib",
+    "@junit_junit//jar",
+  ],
+)
+
+java_test(
   name = "lobstacktest",
   srcs = ["test/LobstackTest.java"],
   test_class = "LobstackTest",
