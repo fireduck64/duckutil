@@ -9,9 +9,11 @@ public abstract class PeriodicThread extends Thread
   
   private final long desired_period_ms;
   private volatile boolean stopped = false;
+  private Object wake_obj;
 
   public PeriodicThread(long desired_period_ms)
   {
+    wake_obj = new Object();
     this.desired_period_ms = desired_period_ms;
 
   }
@@ -39,13 +41,28 @@ public abstract class PeriodicThread extends Thread
       {
         try
         {
-          sleep(sleep_tm);
+          synchronized(wake_obj)
+          {
+            wake_obj.wait(sleep_tm);
+          }
         }
         catch(InterruptedException e)
         {
           logger.log(Level.WARNING, "Periodic thread exception: " + e);
         }
       }
+    }
+  }
+
+  /**
+   * Wake this task and get it to execute if it is sleeping.
+   * If it is already running there there no guarantee of an execution starting after the wake() call.
+   */
+  public void wake()
+  {
+    synchronized(wake_obj)
+    {
+      wake_obj.notifyAll();
     }
   }
 
