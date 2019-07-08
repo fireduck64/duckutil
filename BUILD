@@ -58,7 +58,7 @@ java_test(
 )
 
 java_test(
-  name = "fustiontest",
+  name = "fusiontest",
   srcs = ["test/FusionInitiatorTest.java"],
   test_class = "FusionInitiatorTest",
   size = "medium",
