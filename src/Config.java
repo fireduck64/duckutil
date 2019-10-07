@@ -44,6 +44,20 @@ public abstract class Config
       return def;
     }
 
+    public long getLong(String key)
+    {
+        return Long.parseLong(get(key));
+    }
+
+    public long getLongWithDefault(String key, long def)
+    {
+      if (isSet(key))
+      {
+        return getLong(key);
+      }
+      return def;
+    }
+
 
     public double getDouble(String key)
     {
