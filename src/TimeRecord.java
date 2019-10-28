@@ -45,6 +45,15 @@ public class TimeRecord
     }
   }
 
+  public synchronized void getDataAndReset(Map<String, Long> time_map, Map<String, Long> count_map)
+  {
+    time_map.putAll(times);
+    count_map.putAll(counts);
+
+    reset();
+
+  }
+
   public synchronized void reset()
   {
     times.clear();
