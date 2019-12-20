@@ -9,8 +9,8 @@ java_library(
   name = "lobstack_lib",
   srcs = glob(["src/lobstack/*.java"]),
   deps = [
-    "@junit_junit//jar",
-    "@protobuf//jar",
+    "@maven//:junit_junit",
+    "@maven//:com_google_protobuf_protobuf_java",
     ":duckutil_lib",
   ],
 )
@@ -20,11 +20,9 @@ java_library(
   srcs = glob(["src/jsonrpc/*.java"]),
   deps = [
     ":duckutil_lib",
-    "@jsonrpc2_server//jar",
-    "@jsonrpc2_base//jar",
-    "@json_smart//jar",
-    "@accessors_smart//jar",
-    "@asm//jar",
+    "@maven//:net_minidev_json_smart",
+    "@maven//:com_thetransactioncompany_jsonrpc2_server",
+    "@maven//:com_thetransactioncompany_jsonrpc2_base",
   ],
 )    
 
@@ -32,8 +30,8 @@ java_library(
   name = "sql_lib",
   srcs = glob(["src/sql/*.java"]),
   deps = [
-    "@commons_pool//jar",
-    "@commons_dbcp//jar",
+    "@maven//:commons_pool_commons_pool",
+    "@maven//:commons_dbcp_commons_dbcp",
     ":duckutil_lib",
   ],
 )
@@ -53,7 +51,7 @@ java_test(
   size = "small",
   deps = [
     ":lobstack_lib",
-    "@junit_junit//jar",
+    "@maven//:junit_junit",
   ],
 )
 
@@ -64,7 +62,7 @@ java_test(
   size = "medium",
   deps = [
     ":duckutil_lib",
-    "@junit_junit//jar",
+    "@maven//:junit_junit",
   ],
 )
 
@@ -75,7 +73,7 @@ java_test(
   size = "small",
   deps = [
     ":lobstack_lib",
-    "@junit_junit//jar",
+    "@maven//:junit_junit",
   ],
 )
 
