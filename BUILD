@@ -3,6 +3,9 @@ package(default_visibility = ["//visibility:public"])
 java_library(
 	name = "duckutil_lib",
   srcs = glob(["src/*.java"]),
+  deps = [
+    "@maven//:net_minidev_json_smart",
+  ],
 )
 
 java_library(
