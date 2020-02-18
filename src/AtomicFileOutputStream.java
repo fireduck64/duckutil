@@ -30,7 +30,7 @@ public class AtomicFileOutputStream extends OutputStream
 
     File parent = out_file.getParentFile();
 
-    tmp_file = File.createTempFile(out_file.getName(), "atomic_tmp", parent);
+    tmp_file = File.createTempFile("tmp_" + out_file.getName(), "atomic_tmp", parent);
 
     tmp_out = new FileOutputStream(tmp_file);
 
