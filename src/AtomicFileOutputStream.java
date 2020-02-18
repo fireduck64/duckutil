@@ -46,6 +46,16 @@ public class AtomicFileOutputStream extends OutputStream
 
     Files.move(tmp_file_path, dst_file_path, StandardCopyOption.REPLACE_EXISTING);
   }
+
+  /**
+   * Remove tmp file and cleanup, leave destination file as whatever it was
+   */
+  public void abort()
+    throws java.io.IOException
+  {
+    tmp_out.close();
+    tmp_file.delete();
+  }
   
   @Override
   public void flush()
