@@ -16,27 +16,32 @@ public class MetricLog implements AutoCloseable
     json = new JSONObject();
   }
 
-  public void setOperation(String op)
+  public MetricLog setOperation(String op)
   {
     json.put("operation", op);
+    return this;
   }
 
-  public void setModule(String mod)
+  public MetricLog setModule(String mod)
   {
     json.put("module", mod);
+    return this;
   }
 
-  public void set(String k, String v)
+  public MetricLog set(String k, String v)
   {
     json.put(k, v);
+    return this;
   }
-  public void set(String k, long v)
+  public MetricLog set(String k, long v)
   {
     json.put(k, v);
+    return this;
   }
-  public void set(String k, double v)
+  public MetricLog set(String k, double v)
   {
     json.put(k, v);
+    return this;
   }
 
   public String getLine()
