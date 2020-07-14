@@ -91,7 +91,6 @@ public class MetricLogger
       setName("MetricLoggerThread");
       setDaemon(true);
 
-      // TODO add shutdown hook to capture last logs on exit
     }
 
     @Override
@@ -106,22 +105,15 @@ public class MetricLogger
             log_queue.wait();
           }
 
-          boolean shutdown_monitor = false;
-          if (shutdown_triggered)
-          {
-            shutdown_monitor = true;
-          }
-
           while(!log_queue.isEmpty())
           {
             MetricLog log = log_queue.take();
             log_out.println(log.getLine());
           }
 
-          if (shutdown_monitor)
+          if (shutdown_triggered)
           {
             shutdown_safe=true;
-
             synchronized(shutdown_wait)
             {
               shutdown_wait.notifyAll();
