@@ -13,6 +13,9 @@ public class MetricLogger
   private static boolean init_done = false;
   private static PrintStream log_out;
   private static LinkedBlockingQueue<MetricLog> log_queue;
+  private static boolean shutdown_triggered = false;
+  private static boolean shutdown_safe = false;
+  private static Object shutdown_wait = new Object();
 
 
   public static synchronized void init(String path)
@@ -23,6 +26,8 @@ public class MetricLogger
     log_queue = new LinkedBlockingQueue<>();
     init_done = true;
     new MetricLoggerThread().start();
+
+    Runtime.getRuntime().addShutdownHook(new MetricLoggerShutdownThread());
 
   }
 
@@ -40,6 +45,42 @@ public class MetricLogger
         log_queue.notifyAll();
       }
     }
+  }
+
+  public static class MetricLoggerShutdownThread extends Thread
+  {
+    public MetricLoggerShutdownThread()
+    {
+      setName("MetricLoggerShutdownThread");
+    }
+
+    @Override
+    public void run()
+    {
+      shutdown_triggered = true;
+
+      new MetricLog().setModule("MetricLogger").setOperation("shutdown").close();
+
+      synchronized(shutdown_wait)
+      {
+        synchronized(log_queue)
+        {
+          log_queue.notifyAll();
+        }
+        try
+        {
+          
+          if(!shutdown_safe)
+          {
+            shutdown_wait.wait(2500);
+          }
+        }
+        catch(InterruptedException e){}
+
+      }
+
+    }
+
   }
 
 
@@ -65,10 +106,26 @@ public class MetricLogger
             log_queue.wait();
           }
 
+          boolean shutdown_monitor = false;
+          if (shutdown_triggered)
+          {
+            shutdown_monitor = true;
+          }
+
           while(!log_queue.isEmpty())
           {
             MetricLog log = log_queue.take();
             log_out.println(log.getLine());
+          }
+
+          if (shutdown_monitor)
+          {
+            shutdown_safe=true;
+
+            synchronized(shutdown_wait)
+            {
+              shutdown_wait.notifyAll();
+            }
           }
 
         }
