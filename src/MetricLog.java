@@ -49,6 +49,11 @@ public class MetricLog implements AutoCloseable
     return json.toJSONString();
   }
 
+  protected JSONObject getJson()
+  {
+    return json;
+  }
+
   @Override
   public void close()
   {
@@ -59,7 +64,7 @@ public class MetricLog implements AutoCloseable
     SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSSXXX");
     sdf.setTimeZone(TimeZone.getTimeZone("GMT"));
 
-    json.put("time", sdf.format(new Date()));
+    json.put("timestamp", sdf.format(new Date()));
 
     MetricLogger.record(this);
     

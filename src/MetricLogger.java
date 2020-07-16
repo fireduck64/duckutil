@@ -17,6 +17,9 @@ public class MetricLogger
   private static boolean shutdown_safe = false;
   private static Object shutdown_wait = new Object();
 
+  private static String elasticsearch_url = null;
+  private static String elasticsearch_index = null;
+
 
   public static synchronized void init(String path)
     throws java.io.IOException
@@ -28,6 +31,12 @@ public class MetricLogger
     new MetricLoggerThread().start();
 
     Runtime.getRuntime().addShutdownHook(new MetricLoggerShutdownThread());
+
+  }
+  public static synchronized void enableElasticSearch(String url, String index)
+  {
+    elasticsearch_index = index;
+    elasticsearch_url = url;
 
   }
 
@@ -109,6 +118,19 @@ public class MetricLogger
           {
             MetricLog log = log_queue.take();
             log_out.println(log.getLine());
+            try
+            {
+              if (elasticsearch_url != null)
+              {
+                int code = ElasticSearchPost.saveDoc(elasticsearch_url, elasticsearch_index, log.getJson());
+                
+              }
+            }
+            catch(Throwable t)
+            {
+              System.out.println("Elastic search save error: " + t);
+
+            }
           }
 
           if (shutdown_triggered)
