@@ -47,10 +47,10 @@ public class ElasticSearchPost
     int code =  connection.getResponseCode();
     if (code != 201)
     {
-      System.out.println("Elastic search doc code: 201");
+      System.out.println("Elastic search doc code: " + code);
       System.out.println("Input: " + doc.toJSONString());
 
-      Scanner scan = new Scanner(connection.getInputStream());
+      Scanner scan = new Scanner(connection.getErrorStream());
       while(scan.hasNextLine())
       {
         System.out.println(scan.nextLine());
