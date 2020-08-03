@@ -6,6 +6,7 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.Map;
 import java.util.Date;
+import java.util.Scanner;
 import java.io.OutputStream;
 
 
@@ -44,6 +45,17 @@ public class ElasticSearchPost
     wr.close();
 
     int code =  connection.getResponseCode();
+    if (code != 201)
+    {
+      System.out.println("Elastic search doc code: 201");
+      System.out.println("Input: " + doc.toJSONString());
+
+      Scanner scan = new Scanner(connection.getInputStream());
+      while(scan.hasNextLine())
+      {
+        System.out.println(scan.nextLine());
+      }
+    }
 		return code;
 
   }
