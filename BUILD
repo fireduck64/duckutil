@@ -9,6 +9,14 @@ java_library(
 )
 
 java_library(
+	name = "importtool_lib",
+  srcs = glob(["src/ImportTool.java"]),
+  deps = [
+  ],
+)
+
+
+java_library(
   name = "lobstack_lib",
   srcs = glob(["src/lobstack/*.java"]),
   deps = [
@@ -46,6 +54,15 @@ java_binary(
     ":duckutil_lib",
   ],
 )
+
+java_binary(
+  name = "importtool",
+  main_class = "duckutil.ImportTool",
+  runtime_deps = [
+    ":importtool_lib",
+  ],
+)
+
 
 java_test(
   name = "ziptest",
