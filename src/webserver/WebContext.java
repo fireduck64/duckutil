@@ -17,7 +17,7 @@ public class WebContext implements AutoCloseable
 
   private int http_code=500;
   private String content_type="text/plain";
-  private int output_size = -1;
+  private long output_size = -1;
 
   private ByteArrayOutputStream output_buffer;
   private PrintStream print_out;
@@ -56,7 +56,7 @@ public class WebContext implements AutoCloseable
   }
   public void setHttpCode(int code) { http_code = code; }
   public void setContentType(String type) { content_type = type; }
-  public void setOutputSize(int size) { output_size = size; }
+  public void setOutputSize(long size) { output_size = size; }
 
   public void setException(Throwable t)
   {
