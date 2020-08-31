@@ -19,8 +19,8 @@ public class WebContext implements AutoCloseable
   private String content_type="text/plain";
   private int output_size = -1;
 
-  private ByteArrayOutputStream output_buffer = new ByteArrayOutputStream();
-  private PrintStream print_out = new PrintStream(output_buffer);
+  private ByteArrayOutputStream output_buffer;
+  private PrintStream print_out;
 
   private boolean out_written;
 
@@ -33,6 +33,7 @@ public class WebContext implements AutoCloseable
   {
     this.http_exchange = t;
     logger.info("Request - " + getURI());
+    resetBuffer();
 
   }
 
@@ -46,7 +47,13 @@ public class WebContext implements AutoCloseable
   }
 
   public InputStream getRequestBody() { return http_exchange.getRequestBody(); }
+  public String getRequestMethod() { return http_exchange.getRequestMethod(); }
 
+  public void resetBuffer()
+  {
+    output_buffer = new ByteArrayOutputStream();
+    print_out = new PrintStream(output_buffer);
+  }
   public void setHttpCode(int code) { http_code = code; }
   public void setContentType(String type) { content_type = type; }
   public void setOutputSize(int size) { output_size = size; }
@@ -56,7 +63,6 @@ public class WebContext implements AutoCloseable
     setHttpCode(500);
     setContentType("text/plain");
     out().println(t);
-
   }
 
   public PrintStream out(){return print_out; }
