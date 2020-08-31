@@ -100,14 +100,17 @@ public class WebContext implements AutoCloseable
         byte[] data = output_buffer.toByteArray();
         OutputStream out = http_exchange.getResponseBody();
         out.write(data);
-        out.close();
         out_written = true;
       }
+
+      http_exchange.getResponseBody().flush();
+      http_exchange.getResponseBody().close();
     }
     catch(java.io.IOException e)
     {
       logger.info(e.toString());
     }
+
 
   }
 
