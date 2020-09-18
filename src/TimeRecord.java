@@ -1,9 +1,9 @@
 package duckutil;
 
-import java.util.TreeMap;
-import java.util.Map;
-import java.text.DecimalFormat;
 import java.io.PrintStream;
+import java.text.DecimalFormat;
+import java.util.Map;
+import java.util.TreeMap;
 
 public class TimeRecord
 {
@@ -83,4 +83,3 @@ public class TimeRecord
     }
   }
 }
-

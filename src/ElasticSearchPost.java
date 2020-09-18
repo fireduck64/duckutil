@@ -1,14 +1,12 @@
 package duckutil;
 
-import java.text.SimpleDateFormat;
-import net.minidev.json.JSONObject;
+import java.io.OutputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
-import java.util.Map;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Scanner;
-import java.io.OutputStream;
-
+import net.minidev.json.JSONObject;
 
 public class ElasticSearchPost
 {
@@ -56,7 +54,7 @@ public class ElasticSearchPost
         System.out.println(scan.nextLine());
       }
     }
-		return code;
+    return code;
 
   }
 

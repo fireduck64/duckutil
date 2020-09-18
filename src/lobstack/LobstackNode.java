@@ -1,26 +1,19 @@
 package lobstack;
 
-import java.util.TreeMap;
-import java.util.Map;
-import java.util.TreeSet;
-import java.util.SortedMap;
-
-import java.nio.ByteBuffer;
-
-import org.junit.Assert;
-import java.io.DataInputStream;
-import java.io.DataOutputStream;
+import duckutil.TimeRecord;
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
-import java.io.ObjectOutputStream;
-import java.io.ObjectInputStream;
+import java.io.DataInputStream;
+import java.io.DataOutputStream;
 import java.io.IOException;
-import java.util.ArrayList;
+import java.nio.ByteBuffer;
 import java.util.AbstractMap.SimpleEntry;
+import java.util.ArrayList;
+import java.util.Map;
+import java.util.TreeMap;
+import java.util.TreeSet;
 import java.util.concurrent.BlockingQueue;
-import java.util.concurrent.Semaphore;
-import java.util.concurrent.Executor;
-import duckutil.TimeRecord;
+import org.junit.Assert;
 
 public class LobstackNode implements java.io.Serializable
 {

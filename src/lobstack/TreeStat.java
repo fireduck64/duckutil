@@ -1,9 +1,8 @@
 package lobstack;
-import java.util.TreeMap;
-
-import java.text.DecimalFormat;
 
 import java.io.PrintStream;
+import java.text.DecimalFormat;
+import java.util.TreeMap;
 
 public class TreeStat
 {

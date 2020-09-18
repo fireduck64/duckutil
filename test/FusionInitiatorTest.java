@@ -1,12 +1,10 @@
 
-import org.junit.Test;
-import org.junit.Assert;
-
-import java.util.Random;
 import duckutil.FusionInitiator;
-
-import java.util.LinkedList;
 import java.util.ArrayList;
+import java.util.LinkedList;
+import java.util.Random;
+import org.junit.Assert;
+import org.junit.Test;
 
 public class FusionInitiatorTest
 {

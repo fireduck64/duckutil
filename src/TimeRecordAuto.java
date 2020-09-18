@@ -1,5 +1,4 @@
 package duckutil;
-
 public class TimeRecordAuto implements AutoCloseable
 {
   private long t1;
@@ -8,12 +7,11 @@ public class TimeRecordAuto implements AutoCloseable
   {
     this.label = label;
     t1 = System.nanoTime();
-    
   }
-
   public void close()
   {
     TimeRecord.record(t1, label);
   }
-
 }
+
+

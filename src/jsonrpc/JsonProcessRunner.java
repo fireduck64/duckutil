@@ -1,10 +1,10 @@
 package duckutil.jsonrpc;
 
-import net.minidev.json.parser.JSONParser;
-import net.minidev.json.JSONObject;
-import net.minidev.json.JSONArray;
 import duckutil.ProcessRunner;
 import java.util.Collection;
+import net.minidev.json.JSONArray;
+import net.minidev.json.JSONObject;
+import net.minidev.json.parser.JSONParser;
 
 public class JsonProcessRunner extends ProcessRunner
 {
@@ -30,4 +30,3 @@ public class JsonProcessRunner extends ProcessRunner
      return json;
   }
 }
-

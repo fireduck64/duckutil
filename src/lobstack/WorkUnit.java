@@ -1,11 +1,10 @@
 package lobstack;
 
-import java.util.Map;
-import java.util.TreeMap;
 import duckutil.SimpleFuture;
 import java.nio.ByteBuffer;
+import java.util.Map;
+import java.util.TreeMap;
 import org.junit.Assert;
-
 
 public class WorkUnit
 {

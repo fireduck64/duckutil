@@ -1,7 +1,6 @@
 package duckutil;
 
 import java.util.concurrent.atomic.AtomicLong;
-import java.util.LinkedList;
 
 public class AtomicLoad
 {

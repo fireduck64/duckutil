@@ -1,7 +1,7 @@
 package duckutil;
 
-import java.util.concurrent.atomic.AtomicLong;
 import java.util.LinkedList;
+import java.util.concurrent.atomic.AtomicLong;
 
 /**
  * High performance atomiclong for multiple threads to write to quickly.

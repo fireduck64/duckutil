@@ -2,7 +2,6 @@ package duckutil;
 
 import java.util.concurrent.TimeUnit;
 
-
 public class SimpleFuture<V> implements java.util.concurrent.Future<V>
 {
   private boolean done;

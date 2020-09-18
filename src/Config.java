@@ -1,11 +1,8 @@
 package duckutil;
 
-import java.util.Properties;
-import java.io.FileInputStream;
-
-import java.util.StringTokenizer;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.StringTokenizer;
 
 public abstract class Config
 {

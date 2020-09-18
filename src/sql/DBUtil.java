@@ -1,20 +1,16 @@
 package duckutil.sql;
 
 import duckutil.Config;
-
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
-
-
+import java.util.Properties;
+import org.apache.commons.dbcp.ConnectionFactory;
+import org.apache.commons.dbcp.DriverManagerConnectionFactory;
+import org.apache.commons.dbcp.PoolableConnectionFactory;
+import org.apache.commons.dbcp.PoolingDriver;
 import org.apache.commons.pool.ObjectPool;
 import org.apache.commons.pool.impl.GenericObjectPool;
-import org.apache.commons.dbcp.ConnectionFactory;
-import org.apache.commons.dbcp.PoolingDriver;
-import org.apache.commons.dbcp.PoolableConnectionFactory;
-import org.apache.commons.dbcp.DriverManagerConnectionFactory;
-
-import java.util.Properties;
 
 public class DBUtil
 {

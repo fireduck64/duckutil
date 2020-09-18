@@ -3,14 +3,10 @@ package duckutil.jsonrpc;
 import com.thetransactioncompany.jsonrpc2.JSONRPC2Error;
 import com.thetransactioncompany.jsonrpc2.JSONRPC2Request;
 import com.thetransactioncompany.jsonrpc2.JSONRPC2Response;
-import com.thetransactioncompany.jsonrpc2.server.RequestHandler;
 import com.thetransactioncompany.jsonrpc2.server.MessageContext;
-
-import net.minidev.json.JSONObject;
-
-import java.util.logging.Level;
+import com.thetransactioncompany.jsonrpc2.server.RequestHandler;
 import java.util.logging.Logger;
-
+import net.minidev.json.JSONObject;
 
 public abstract class JsonRequestHandler implements RequestHandler
 {

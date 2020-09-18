@@ -3,7 +3,6 @@ package duckutil;
 import java.util.ArrayList;
 import java.util.concurrent.Semaphore;
 
-
 /**
  * This acts as a monitor to facilitate multiple threads who are working on
  * related tasks that we don't want to have be tightly bound but want to be loosely
@@ -82,4 +81,3 @@ public class FusionInitiator extends Thread
 
   }
 }
-

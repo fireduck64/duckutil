@@ -1,11 +1,12 @@
 package duckutil;
 
 import java.io.File;
-import java.io.OutputStream;
 import java.io.FileOutputStream;
+import java.io.OutputStream;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.StandardCopyOption;
+
 /**
  * Outputs to a temporary file and then renames
  */
@@ -86,4 +87,3 @@ public class AtomicFileOutputStream extends OutputStream
   }
 
 }
-

@@ -1,9 +1,8 @@
 
-import org.junit.Test;
-import org.junit.Assert;
-
 import java.util.Random;
 import lobstack.ZUtil;
+import org.junit.Assert;
+import org.junit.Test;
 
 public class ZipTest
 {

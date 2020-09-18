@@ -1,9 +1,9 @@
 package duckutil;
 
-import java.util.Collection;
 import java.io.InputStream;
-import java.util.Scanner;
 import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Scanner;
 
 /**
  * Runs a process and keeps the standard output and standard error as a string.
