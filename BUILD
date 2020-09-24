@@ -24,6 +24,17 @@ java_library(
   ],
 )
 
+# Some basic library classes that have no maven dependencies
+# a lot more could be added here if needed
+java_library(
+  name = "basic_lib",
+  srcs = glob([
+    "src/RateLimit.java", 
+    "src/PeriodicThread.java",
+    "src/WeightedRandomSelector.java"]),
+  deps = [
+  ],
+)
 
 java_library(
   name = "lobstack_lib",
