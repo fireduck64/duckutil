@@ -31,7 +31,8 @@ java_library(
   srcs = glob([
     "src/RateLimit.java", 
     "src/PeriodicThread.java",
-    "src/WeightedRandomSelector.java"]),
+    "src/WeightedRandomSelector.java",
+    "src/StatData.java"]),
   deps = [
   ],
 )
