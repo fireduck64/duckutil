@@ -1,12 +1,9 @@
 package lobstack;
 
+import com.google.protobuf.ByteString;
+import java.io.ByteArrayOutputStream;
 import java.util.zip.Deflater;
 import java.util.zip.Inflater;
-
-import java.io.ByteArrayOutputStream;
-
-import com.google.protobuf.ByteString;
-
 import org.junit.Assert;
 
 public class ZUtil

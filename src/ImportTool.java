@@ -66,7 +66,10 @@ public class ImportTool
 
           if (mode == 0)
           {
-            tmp_out.println(line);
+            if (line.trim().length() > 0)
+            {
+              tmp_out.println(line);
+            }
           }
           else if (mode == 1)
           {
@@ -91,6 +94,7 @@ public class ImportTool
 
     //System.out.println(tokens);
 
+    tmp_out.println("");
     for(String im : import_lines)
     {
       if (hasKeyword(im,tokens))
@@ -103,6 +107,12 @@ public class ImportTool
       }
     }
     tmp_out.println("");
+    // Trim blank at end
+    while((after_lines.size() > 0) && (after_lines.peekLast().trim().length()==0))
+    {
+      after_lines.pollLast();
+    }
+
     for(String line : after_lines)
     {
       line = line.replace("\t","  ");

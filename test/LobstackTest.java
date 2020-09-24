@@ -1,21 +1,15 @@
 
-
-import lobstack.Lobstack;
-
-import java.nio.ByteBuffer;
-import java.util.Random;
 import java.io.File;
+import java.nio.ByteBuffer;
 import java.util.Map;
-
-import org.junit.Assert;
-import org.junit.Test;
+import java.util.Random;
 import java.util.TreeMap;
-
 import java.util.concurrent.Semaphore;
-
-import org.junit.rules.TemporaryFolder;
+import lobstack.Lobstack;
+import org.junit.Assert;
 import org.junit.Rule;
-
+import org.junit.Test;
+import org.junit.rules.TemporaryFolder;
 
 public class LobstackTest
 {

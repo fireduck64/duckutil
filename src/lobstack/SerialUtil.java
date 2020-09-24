@@ -1,9 +1,10 @@
 package lobstack;
 
-import java.io.DataOutputStream;
 import java.io.DataInputStream;
+import java.io.DataOutputStream;
 import java.io.IOException;
 import org.junit.Assert;
+
 public class SerialUtil
 {
 

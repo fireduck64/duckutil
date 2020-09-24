@@ -1,4 +1,3 @@
-
 package lobstack;
 
 import java.util.LinkedHashMap;
@@ -7,18 +6,18 @@ import java.util.Map;
 public class AutoCloseLRUCache<K,V extends AutoCloseable> extends LinkedHashMap<K,V>
 {
 
-	private static final long serialVersionUID=9L;
-	private int MAX_CAP;
+  private static final long serialVersionUID=9L;
+  private int MAX_CAP;
 
-	public AutoCloseLRUCache(int cap)
-	{
-		super(cap+1, 2.000f, true); 
-		MAX_CAP=cap;
+  public AutoCloseLRUCache(int cap)
+  {
+    super(cap+1, 2.000f, true); 
+    MAX_CAP=cap;
 
-	}
+  }
 
-	protected boolean removeEldestEntry(Map.Entry<K,V> eldest)
-	{
+  protected boolean removeEldestEntry(Map.Entry<K,V> eldest)
+  {
     boolean close = (size() > MAX_CAP);
 
     if (close)
@@ -36,6 +35,6 @@ public class AutoCloseLRUCache<K,V extends AutoCloseable> extends LinkedHashMap<
 
     return false;
 
-	}
+  }
 
 }

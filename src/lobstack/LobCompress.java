@@ -1,12 +1,10 @@
 package lobstack;
 
-import java.util.concurrent.LinkedBlockingQueue;
-
-import java.util.TreeMap;
-import java.util.Map;
-import java.nio.ByteBuffer;
 import java.io.File;
-
+import java.nio.ByteBuffer;
+import java.util.Map;
+import java.util.TreeMap;
+import java.util.concurrent.LinkedBlockingQueue;
 
 public class LobCompress
 {
@@ -112,5 +110,3 @@ public class LobCompress
   }
 
 }
-
-

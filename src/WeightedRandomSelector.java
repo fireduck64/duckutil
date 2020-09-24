@@ -1,8 +1,7 @@
 package duckutil;
 
-import java.util.TreeMap;
 import java.util.Random;
-
+import java.util.TreeMap;
 
 /**
  * Allow for randomly selecting an item using a group if items with some weight
@@ -49,4 +48,3 @@ public class WeightedRandomSelector<X>
 
 
 }
-

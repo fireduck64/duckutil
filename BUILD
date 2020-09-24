@@ -7,6 +7,15 @@ java_library(
     "@maven//:net_minidev_json_smart",
   ],
 )
+java_library(
+	name = "webserver_lib",
+  srcs = glob(["src/webserver/*.java"]),
+  deps = [
+    ":duckutil_lib",
+    "@maven//:net_minidev_json_smart",
+  ],
+)
+
 
 java_library(
 	name = "importtool_lib",

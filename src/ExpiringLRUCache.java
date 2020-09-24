@@ -1,7 +1,5 @@
 package duckutil;
 
-import java.util.LinkedHashMap;
-import java.util.Map;
 
 /**
  * Does no syncronization
@@ -11,14 +9,14 @@ public class ExpiringLRUCache<K,V>
   private LRUCache<K,CacheElement<V> > cache;
   private long expire_time_ms;
 
-	private static final long serialVersionUID=11L;
+  private static final long serialVersionUID=11L;
 
-	public ExpiringLRUCache(int cap, long expire_ms)
-	{
+  public ExpiringLRUCache(int cap, long expire_ms)
+  {
     cache = new LRUCache<K, CacheElement<V> >(cap);
     this.expire_time_ms = expire_ms;
 
-	}
+  }
 
   public void put(K k, V v)
   {

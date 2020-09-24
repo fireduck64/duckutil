@@ -1,6 +1,6 @@
 package duckutil;
-import java.util.Map;
 
+import java.util.Map;
 
 public class ConfigMem extends Config
 {

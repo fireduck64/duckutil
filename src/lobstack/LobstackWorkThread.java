@@ -1,9 +1,8 @@
 package lobstack;
-import java.util.TreeMap;
-
-import java.util.concurrent.SynchronousQueue;
 
 import duckutil.SimpleFuture;
+import java.util.TreeMap;
+import java.util.concurrent.SynchronousQueue;
 
 public class LobstackWorkThread extends Thread
 {

@@ -1,33 +1,28 @@
 package duckutil.jsonrpc;
 
-
+import com.sun.net.httpserver.Authenticator;
+import com.sun.net.httpserver.BasicAuthenticator;
 import com.sun.net.httpserver.HttpExchange;
 import com.sun.net.httpserver.HttpHandler;
 import com.sun.net.httpserver.HttpServer;
-import duckutil.Config;
-
-import java.io.ByteArrayOutputStream;
-import java.io.IOException;
-import java.io.PrintStream;
-import java.io.OutputStream;
-
-import duckutil.TaskMaster;
-import java.net.InetSocketAddress;
-import com.sun.net.httpserver.BasicAuthenticator;
-import com.sun.net.httpserver.Authenticator;
-import com.thetransactioncompany.jsonrpc2.server.Dispatcher;
 import com.thetransactioncompany.jsonrpc2.JSONRPC2Request;
 import com.thetransactioncompany.jsonrpc2.JSONRPC2Response;
-import com.thetransactioncompany.jsonrpc2.server.RequestHandler;
+import com.thetransactioncompany.jsonrpc2.server.Dispatcher;
 import com.thetransactioncompany.jsonrpc2.server.MessageContext;
-
+import com.thetransactioncompany.jsonrpc2.server.RequestHandler;
+import duckutil.Config;
+import duckutil.TaskMaster;
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
+import java.io.OutputStream;
+import java.io.PrintStream;
+import java.net.InetSocketAddress;
 import java.util.Scanner;
-
 
 public class JsonRpcServer
 {
   private final HttpServer http_server;
-	private final Config config;
+  private final Config config;
 
   private final AuthAgent auth;
 
@@ -36,15 +31,15 @@ public class JsonRpcServer
 
   
   public JsonRpcServer(Config config)
-		throws Exception
+    throws Exception
   {
     this(config, true);
   }
 
   public JsonRpcServer(Config config, boolean use_auth)
-		throws Exception
+    throws Exception
   {
-		this.config = config;
+    this.config = config;
 
     config.require("rpc_port");
 
@@ -67,7 +62,7 @@ public class JsonRpcServer
     http_server = HttpServer.create(new InetSocketAddress(listen_host, listen_port), 0);
     http_server.createContext("/", new RootHandler());
     http_server.setExecutor(TaskMaster.getBasicExecutor(8,"json_rpc_server"));
-		http_server.start();
+    http_server.start();
 
     dispatcher = new Dispatcher();
     
@@ -121,7 +116,7 @@ public class JsonRpcServer
           JSONRPC2Request req = JSONRPC2Request.parse(line);
           JSONRPC2Response resp = dispatcher.process(req, null);
 
-			    print_out.println(resp.toJSONString());
+          print_out.println(resp.toJSONString());
 
         }
         catch(Throwable e)
@@ -170,7 +165,7 @@ public class JsonRpcServer
       return new String[]{"echo"};
     }
 
-		public JSONRPC2Response process(JSONRPC2Request req, MessageContext ctx) 
+    public JSONRPC2Response process(JSONRPC2Request req, MessageContext ctx) 
     {
       return new JSONRPC2Response(req.getID());
     }
