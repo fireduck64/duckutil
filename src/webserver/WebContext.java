@@ -67,7 +67,9 @@ public class WebContext implements AutoCloseable
   {
     setHttpCode(500);
     setContentType("text/plain");
+    resetBuffer();
     out().println(t);
+    t.printStackTrace(out());
   }
 
   public PrintStream out(){return print_out; }

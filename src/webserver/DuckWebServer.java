@@ -44,6 +44,7 @@ public class DuckWebServer
         catch(Exception e)
         {
           ctx.setException(e);
+
         }
       }
 
