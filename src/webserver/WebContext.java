@@ -49,6 +49,11 @@ public class WebContext implements AutoCloseable
   public InputStream getRequestBody() { return http_exchange.getRequestBody(); }
   public String getRequestMethod() { return http_exchange.getRequestMethod(); }
 
+  /**
+   * Try not to do much with this, since it could conflict with what happens in close()
+   */
+  public HttpExchange getExchange() {return http_exchange; }
+
   public void resetBuffer()
   {
     output_buffer = new ByteArrayOutputStream();
@@ -78,7 +83,6 @@ public class WebContext implements AutoCloseable
     logger.info(String.format("HTTP result: %s code:%d sz:%d", content_type, http_code, output_size));
     http_exchange.getResponseHeaders().add("Content-type",content_type);
     http_exchange.sendResponseHeaders( http_code, output_size);
-
   }
 
   /**
