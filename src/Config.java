@@ -18,12 +18,14 @@ public abstract class Config
       return def;
     }
 
-    public void require(String key)
+    public String require(String key)
     {
-      if(get(key) == null)
+      String s = get(key);
+      if(s == null)
       {
         throw new RuntimeException("Missing required key: " + key);
       }
+      return s;
     }
 
 
