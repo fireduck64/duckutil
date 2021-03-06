@@ -6,7 +6,6 @@ import java.util.StringTokenizer;
 
 public abstract class Config
 {
-
     public abstract String get(String key);
 
     public String getWithDefault(String key, String def)

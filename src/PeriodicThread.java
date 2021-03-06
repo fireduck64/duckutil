@@ -33,6 +33,10 @@ public abstract class PeriodicThread extends Thread
       {
         logger.log(Level.WARNING, "Periodic thread exception", t);
       }
+      synchronized(wake_obj)
+      {
+        wake_obj.notifyAll();
+      }
 
       long tm = System.currentTimeMillis();
       long sleep_tm = end_time - tm;
@@ -64,6 +68,16 @@ public abstract class PeriodicThread extends Thread
     {
       wake_obj.notifyAll();
     }
+  }
+  public void wakeAndWait()
+    throws InterruptedException
+  {
+    synchronized(wake_obj)
+    {
+      wake_obj.notifyAll();
+      wake_obj.wait();
+    }
+
   }
 
   public void halt()
