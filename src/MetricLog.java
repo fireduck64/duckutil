@@ -9,11 +9,19 @@ public class MetricLog implements AutoCloseable
 {
   private JSONObject json;
   private long start_time_nanos;
+  private MetricLog parent_log;
+  private String label;
 
   public MetricLog()
   {
     start_time_nanos = System.nanoTime();
     json = new JSONObject();
+  }
+  public MetricLog(MetricLog parent_log, String label)
+  {
+    this();
+    this.parent_log = parent_log;
+    this.label = label;
   }
 
   public MetricLog setOperation(String op)
@@ -43,6 +51,11 @@ public class MetricLog implements AutoCloseable
     json.put(k, v);
     return this;
   }
+  public MetricLog set(String k, JSONObject v)
+  {
+    json.put(k, v);
+    return this;
+  }
 
   public String getLine()
   {
@@ -57,6 +70,12 @@ public class MetricLog implements AutoCloseable
   @Override
   public void close()
   {
+    if (parent_log != null)
+    {
+      parent_log.set( label, json );
+      return;
+    }
+
     double nano_delta = System.nanoTime() - start_time_nanos;
     double ms_delta = nano_delta / 1e6;
     json.put("op_duration_ms", ms_delta);
