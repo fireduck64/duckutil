@@ -70,6 +70,10 @@ public class MetricLog implements AutoCloseable
   @Override
   public void close()
   {
+    double nano_delta = System.nanoTime() - start_time_nanos;
+    double ms_delta = nano_delta / 1e6;
+    json.put("op_duration_ms", ms_delta);
+
     if (parent_log != null)
     {
       parent_log.set( label, json );
