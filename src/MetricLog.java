@@ -80,10 +80,6 @@ public class MetricLog implements AutoCloseable
       return;
     }
 
-    double nano_delta = System.nanoTime() - start_time_nanos;
-    double ms_delta = nano_delta / 1e6;
-    json.put("op_duration_ms", ms_delta);
-
     SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSSXXX");
     sdf.setTimeZone(TimeZone.getTimeZone("GMT"));
 
