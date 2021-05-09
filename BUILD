@@ -118,3 +118,15 @@ java_test(
   ],
 )
 
+java_test(
+  name = "lrutest",
+  srcs = ["test/LRUTest.java"],
+  test_class = "LRUTest",
+  size = "medium",
+  deps = [
+    ":duckutil_lib",
+    "@maven//:junit_junit",
+  ],
+)
+
+

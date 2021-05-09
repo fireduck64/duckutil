@@ -13,13 +13,11 @@ public class LRUCache<K,V> extends LinkedHashMap<K,V>
   {
     super(cap+1, 2.000f, true); 
     MAX_CAP=cap;
-
   }
 
   protected boolean removeEldestEntry(Map.Entry<K,V> eldest)
   {
     return (size() > MAX_CAP);
-
   }
 
 }
