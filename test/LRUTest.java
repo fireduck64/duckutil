@@ -43,7 +43,12 @@ public class LRUTest
     int removed = cache.prune();
     Assert.assertTrue(removed > 500);
 
-    System.out.println("Removed: " + removed);
+    System.out.println("Removed1: " + removed);
+
+    System.gc();
+    removed = cache.prune();
+    System.out.println("Removed2: " + removed);
+    Assert.assertEquals(0, removed);
 
   }
 
