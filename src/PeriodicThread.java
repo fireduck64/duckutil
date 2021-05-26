@@ -11,6 +11,8 @@ public abstract class PeriodicThread extends Thread
   private volatile boolean stopped = false;
   private Object wake_obj;
 
+  private MetricLog run_mlog;
+
   public PeriodicThread(long desired_period_ms)
   {
     wake_obj = new Object();
@@ -25,13 +27,22 @@ public abstract class PeriodicThread extends Thread
       long start = System.currentTimeMillis();
       long end_time = start + desired_period_ms;
       
-      try
+      try(MetricLog mlog = new MetricLog()) 
       {
-        runPass();
-      }
-      catch(Throwable t)
-      {
-        logger.log(Level.WARNING, "Periodic thread exception", t);
+        run_mlog = mlog;
+        mlog.setOperation("periodic_run");
+        mlog.setModule(getName());
+        try
+        {
+          runPass();
+          mlog.set("error",0);
+        }
+        catch(Throwable t)
+        {
+          mlog.set("error",1);
+          logger.log(Level.WARNING, "Periodic thread exception", t);
+        }
+        run_mlog = null;
       }
       synchronized(wake_obj)
       {
@@ -56,6 +67,14 @@ public abstract class PeriodicThread extends Thread
         }
       }
     }
+  }
+
+  /**
+   * Get the metric log for the current run.  Should only be called during runPass()
+   */
+  protected MetricLog getMlog()
+  {
+    return run_mlog;
   }
 
   /**
