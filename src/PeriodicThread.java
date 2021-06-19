@@ -2,12 +2,14 @@ package duckutil;
 
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import java.util.Random;
 
 public abstract class PeriodicThread extends Thread
 {
   private static final Logger logger = Logger.getLogger("periodicthread");
   
   private final long desired_period_ms;
+  private final double skew_ms;
   private volatile boolean stopped = false;
   private Object wake_obj;
 
@@ -15,17 +17,26 @@ public abstract class PeriodicThread extends Thread
 
   public PeriodicThread(long desired_period_ms)
   {
+    this(desired_period_ms, 0.0);
+  }
+  public PeriodicThread(long desired_period_ms, double skew_ms)
+  {
     wake_obj = new Object();
     this.desired_period_ms = desired_period_ms;
+    this.skew_ms = skew_ms;
 
   }
 
   public void run()
   {
+    Random rnd = new Random();
+
     while(!stopped)
     {
       long start = System.currentTimeMillis();
-      long end_time = start + desired_period_ms;
+      long skew = Math.round( skew_ms * rnd.nextGaussian());
+
+      long end_time = start + Math.max(0, desired_period_ms + skew);
       
       try(MetricLog mlog = new MetricLog()) 
       {
