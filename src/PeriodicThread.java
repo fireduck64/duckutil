@@ -43,6 +43,7 @@ public abstract class PeriodicThread extends Thread
         run_mlog = mlog;
         mlog.setOperation("periodic_run");
         mlog.setModule(getName());
+        long start_time = System.nanoTime();
         try
         {
           runPass();
@@ -54,6 +55,7 @@ public abstract class PeriodicThread extends Thread
           logger.log(Level.WARNING, "Periodic thread exception", t);
         }
         run_mlog = null;
+        TimeRecord.record(start_time, "periodic:"+getName());
       }
       synchronized(wake_obj)
       {
