@@ -14,7 +14,6 @@ import org.apache.commons.pool.impl.GenericObjectPool;
 
 public class DBUtil
 {
-
     private static void loadDriver(String driver)
         throws SQLException
     {

@@ -46,6 +46,8 @@ public class ImportTool
     while(scan.hasNextLine())
     {
       String line = scan.nextLine();
+      line = tailTrim(line);
+
       if (line.startsWith("import"))
       {
         if (mode == 2) throw new RuntimeException("unexpected import in mode 2: " + line);
@@ -155,6 +157,19 @@ public class ImportTool
       }
     }
     tokens.add(accum);
+
+  }
+  private String tailTrim(String line)
+  {
+    while((line.length() > 0) && (line.endsWith(" ")))
+    {
+      line = line.substring(0, line.length()-1);
+    }
+    while((line.length() > 0) && (line.endsWith("\t")))
+    {
+      line = line.substring(0, line.length()-1);
+    }
+    return line;
 
   }
 
