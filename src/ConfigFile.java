@@ -8,7 +8,19 @@ public class ConfigFile extends Config
     private Properties props;
     private String env_override_prefix;
 
+
     public ConfigFile(String file_name)
+        throws java.io.IOException
+    {
+      this(file_name, null);
+    }
+
+    /** 
+     * If set, override_prefix will be used as the env_override_prefix.
+     * Example, if override_prefix is set to "a_" and a caller asks for "b"
+     * then environment variable "a_b" will be checked before checking the file.
+     */
+    public ConfigFile(String file_name, String override_prefix)
         throws java.io.IOException
     {
         props = new Properties();
@@ -18,6 +30,13 @@ public class ConfigFile extends Config
         if (get("env_override_prefix") != null)
         {
           env_override_prefix = get("env_override_prefix");
+        }
+        else
+        {
+          if (override_prefix != null)
+          {
+            env_override_prefix = override_prefix;
+          }
         }
     }
 
