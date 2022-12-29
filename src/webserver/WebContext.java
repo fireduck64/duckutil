@@ -8,6 +8,7 @@ import java.io.OutputStream;
 import java.io.PrintStream;
 import java.net.URI;
 import java.util.logging.Logger;
+import java.util.Scanner;
 
 public class WebContext implements AutoCloseable
 {
@@ -47,6 +48,19 @@ public class WebContext implements AutoCloseable
   }
 
   public InputStream getRequestBody() { return http_exchange.getRequestBody(); }
+  public String getRequestBodyString() 
+  {
+    StringBuilder sb = new StringBuilder();
+    Scanner scan = new Scanner(getRequestBody());
+    while(scan.hasNextLine())
+    {
+      sb.append(scan.nextLine());
+      sb.append('\n');
+    }
+    scan.close();
+    return sb.toString();
+
+  }
   public String getRequestMethod() { return http_exchange.getRequestMethod(); }
 
   /**
