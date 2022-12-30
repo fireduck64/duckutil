@@ -6,6 +6,7 @@ import java.net.URL;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Scanner;
+import java.util.TimeZone;
 import net.minidev.json.JSONObject;
 
 public class ElasticSearchPost
@@ -33,6 +34,7 @@ public class ElasticSearchPost
     if (!doc.containsKey("timestamp"))
     {
       SimpleDateFormat sdf_iso = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSSZ");
+      sdf_iso.setTimeZone( TimeZone.getTimeZone("GMT") );
       doc.put("timestamp", sdf_iso.format(new Date()));
       doc.put("time_ms", System.currentTimeMillis());
     }
