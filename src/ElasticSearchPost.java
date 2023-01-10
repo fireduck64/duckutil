@@ -45,7 +45,7 @@ public class ElasticSearchPost
     wr.close();
 
     int code =  connection.getResponseCode();
-    if (code != 201)
+    if ((code != 200) && (code != 201))
     {
       System.out.println("Elastic search doc code: " + code);
       System.out.println("Input: " + doc.toJSONString());
