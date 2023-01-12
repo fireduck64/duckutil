@@ -61,6 +61,7 @@ public class JsonRpcServer
 
     http_server = HttpServer.create(new InetSocketAddress(listen_host, listen_port), 0);
     http_server.createContext("/", new RootHandler());
+    http_server.createContext("/ping", new HealthHandler());
     http_server.setExecutor(TaskMaster.getBasicExecutor(8,"json_rpc_server"));
     http_server.start();
 
@@ -127,6 +128,26 @@ public class JsonRpcServer
         }
 
       }
+
+      byte[] data = b_out.toByteArray();
+      t.sendResponseHeaders(code, data.length);
+      OutputStream out = t.getResponseBody();
+      out.write(data);
+      out.close();
+
+    }
+  }
+
+  public class HealthHandler implements HttpHandler
+  {
+    @Override
+    public void handle(HttpExchange t) throws IOException {
+      ByteArrayOutputStream b_out = new ByteArrayOutputStream();
+      PrintStream print_out = new PrintStream(b_out);
+
+      int code = 200;
+
+      print_out.println("OK");
 
       byte[] data = b_out.toByteArray();
       t.sendResponseHeaders(code, data.length);
