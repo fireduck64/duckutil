@@ -29,7 +29,7 @@ public class ConfigJson extends Config
     public ConfigJson(String file_name, String override_prefix)
         throws java.io.IOException, net.minidev.json.parser.ParseException
     {
-        JSONParser parser = new JSONParser( JSONParser.MODE_STRICTEST );
+        JSONParser parser = new JSONParser( JSONParser.MODE_PERMISSIVE );
 
         props = (JSONObject) parser.parse(new FileInputStream(file_name));
 
