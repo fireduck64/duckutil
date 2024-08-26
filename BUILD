@@ -16,7 +16,6 @@ java_library(
   ],
 )
 
-
 java_library(
 	name = "importtool_lib",
   srcs = glob(["src/ImportTool.java"]),
@@ -70,6 +69,15 @@ java_binary(
     ":importtool_lib",
   ],
 )
+
+java_binary(
+  name = "Synco",
+  main_class = "duckutil.Synco",
+  runtime_deps = [
+    ":duckutil_lib",
+  ],
+)
+
 
 
 java_test(
