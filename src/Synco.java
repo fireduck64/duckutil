@@ -21,8 +21,6 @@ import java.text.DecimalFormat;
 public class Synco
 {
   public static int BLOCK_SIZE=16*1024*1024;
-  public static int SRC_SCAN_THREADS=4;
-  public static int DST_SCAN_THREADS=4;
   public static int COPY_THREADS=8;
 
   public static long RATE_LOOK_BACK=30L * 1000L;
@@ -38,8 +36,6 @@ public class Synco
     new Synco(new File(args[0]), new File(args[1]));
   }
   
-  ThreadPoolExecutor src_scan_exec = TaskMaster.getBasicExecutor(SRC_SCAN_THREADS, "synco_scan_src");
-  ThreadPoolExecutor dst_scan_exec = TaskMaster.getBasicExecutor(DST_SCAN_THREADS, "synco_scan_dst");
   ThreadPoolExecutor copy_exec = TaskMaster.getBasicExecutor(COPY_THREADS, "synco_copy");
 
   RateTracker src_scan_rate = new RateTracker(RATE_LOOK_BACK);
@@ -115,6 +111,7 @@ public class Synco
 
   }
 
+
   private void monsterCopy(File src, File dst)
     throws Exception
   {
@@ -128,76 +125,52 @@ public class Synco
     { 
       dst_f.truncate(src_f.size());
     }
-
-    TaskMaster<String> src_task = new TaskMaster(src_scan_exec);
-    TaskMaster<String> dst_task = new TaskMaster(dst_scan_exec);
+    
+    TaskMaster<Long> copy_task = new TaskMaster(copy_exec);
 
     {
       long pos = 0;
       while (pos < src_f.size())
       {
-        src_task.addTask(new ReadBlockTask(src_f, pos, src_scan_rate));
-        pos += BLOCK_SIZE;
-      }
-    }
-    {
-      long pos = 0;
-      while (pos < dst_f.size())
-      {
-        dst_task.addTask(new ReadBlockTask(dst_f, pos, dst_scan_rate));
+        copy_task.addTask(new SyncBlockTask(src_f, dst_f, pos));
         pos += BLOCK_SIZE;
       }
     }
 
-    ArrayList<String> src_hash_lst = src_task.getResults();
-    ArrayList<String> dst_hash_lst = dst_task.getResults();
-    
-    TaskMaster<Long> copy_task = new TaskMaster(copy_exec);
-
+    long copy_sz = 0;
     int dirty_count=0;
-    for(int block_idx = 0; block_idx < src_hash_lst.size(); block_idx++)
+    for(long r : copy_task.getResults())
     {
-      long pos = BLOCK_SIZE;
-      pos = pos * block_idx;
-      boolean dirty = true;
-      if (block_idx < dst_hash_lst.size())
-      if (src_hash_lst.get(block_idx).equals(dst_hash_lst.get(block_idx)))
-      {
-        dirty = false;
-      }
-     
-      if (dirty)
+      if (r > 0)
       {
         dirty_count++;
-        copy_task.addTask(new CopyTask(src_f, dst_f, pos));
+        copy_sz+=r;
       }
 
     }
-    System.out.println("  dirty count: " + dirty_count);
-    copy_task.getResults();
+    System.out.println("  dirty count: " + dirty_count + " bytes " + copy_sz);
 
     src_f.close();
     dst_f.close();
 
     dst.setLastModified( src.lastModified() );
 
-
-
   }
 
-  public class CopyTask implements Callable<Long>
+  public class SyncBlockTask implements Callable<Long>
   {
     FileChannel in;
     FileChannel out;
     long pos;
 
-    public CopyTask(FileChannel in, FileChannel out, long pos)
+    public SyncBlockTask(FileChannel in, FileChannel out, long pos)
     {
       this.in = in;
       this.out = out;
       this.pos = pos;
 
     }
+
 
     public Long call() throws Exception
     {
@@ -207,52 +180,44 @@ public class Synco
         sz = (int)(in.size() - pos);
       }
       if (sz <= 0) throw new Exception("Read past size");
-      byte[] block_b = new byte[BLOCK_SIZE];
+      byte[] block_b = new byte[sz];
       ByteBuffer block = ByteBuffer.wrap(block_b);
-      int r = in.read( block, pos);
-      if (r != sz) throw new Exception("Incomplete read");
+      {
+        int r = in.read( block, pos);
+        src_scan_rate.record(sz);
+        if (r != sz) throw new Exception("Incomplete read");
+      }
 
       block.rewind();
-      out.write(block, pos);
-
-      copy_rate.record(r);
-
-      return (long)r;
-
-    }
-
-  }
-
-  public class ReadBlockTask implements Callable<String>
-  {
-    FileChannel in;
-    long pos;
-    RateTracker tracker;
-
-    public ReadBlockTask(FileChannel in, long pos, RateTracker tracker)
-    {
-      this.in = in;
-      this.pos = pos;
-      this.tracker = tracker;
-    }
-
-    public String call() throws Exception
-    {
-      int sz = BLOCK_SIZE;
-      if (in.size() < pos + BLOCK_SIZE)
-      {
-        sz = (int)(in.size() - pos);
-      }
-      if (sz <= 0) throw new Exception("Read past size");
-      byte[] block_b = new byte[BLOCK_SIZE];
-      ByteBuffer block = ByteBuffer.wrap(block_b);
-      int r = in.read( block, pos);
-      if (r != sz) throw new Exception("Incomplete read");
-
-      tracker.record(r);
 
       MessageDigest md = MessageDigest.getInstance("SHA-256");
-      return Base64.getEncoder().encodeToString(md.digest(block_b));
+      String src_hash = Base64.getEncoder().encodeToString(md.digest(block_b));
+      boolean dirty=true;
+      if (out.size() >= pos+sz)
+      {
+        byte[] block_dest_b = new byte[sz];
+        ByteBuffer block_dest = ByteBuffer.wrap(block_dest_b);
+        int r = out.read( block_dest, pos );
+
+        dst_scan_rate.record(sz);
+        if (r != sz) throw new Exception("Incomplete read");
+        String dst_hash = Base64.getEncoder().encodeToString(md.digest(block_dest_b));
+
+        if (src_hash.equals(dst_hash))
+        {
+          dirty=false;
+
+        }
+      }
+      if (dirty)
+      {
+        out.write(block, pos);
+        copy_rate.record(sz);
+        return (long)sz;
+
+      }
+      return 0L;
+
     }
 
   }
