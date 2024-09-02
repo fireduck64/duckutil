@@ -138,9 +138,11 @@ public class Synco
     }
 
     long copy_sz = 0;
-    int dirty_count=0;
+    long dirty_count=0;
+    long total_blocks = 0;
     for(long r : copy_task.getResults())
     {
+      total_blocks++;
       if (r > 0)
       {
         dirty_count++;
@@ -148,7 +150,11 @@ public class Synco
       }
 
     }
-    System.out.println("  dirty count: " + dirty_count + " bytes " + copy_sz);
+    double dirty_ratio = (double) dirty_count / (double) total_blocks;
+    DecimalFormat df = new DecimalFormat("0.000");
+
+    long copy_sz_mb = copy_sz / 1048576L;
+    System.out.println(String.format("  dirty count: %d (%s) bytes: %d", dirty_count, df.format(dirty_ratio), copy_sz_mb));
 
     src_f.close();
     dst_f.close();
