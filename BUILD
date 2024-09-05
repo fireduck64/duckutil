@@ -2,7 +2,7 @@ package(default_visibility = ["//visibility:public"])
 
 java_library(
 	name = "duckutil_lib",
-  srcs = glob(["src/*.java"]),
+  srcs = glob(["src/*.java", "src/bloomtime/*.java"]),
   deps = [
     "@maven//:net_minidev_json_smart",
   ],
@@ -117,6 +117,18 @@ java_test(
   name = "lrutest",
   srcs = ["test/LRUTest.java"],
   test_class = "LRUTest",
+  size = "medium",
+  deps = [
+    ":duckutil_lib",
+    "@maven//:junit_junit",
+  ],
+)
+
+
+java_test(
+  name = "bloomtest",
+  srcs = ["test/BloomTest.java"],
+  test_class = "BloomTest",
   size = "medium",
   deps = [
     ":duckutil_lib",
