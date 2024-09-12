@@ -96,7 +96,7 @@ public class BloomTest
     }
     
     bf.flush();
-    bf = new BloomFilter(f, 8000000, 24);
+    bf = new BloomFilter(f, 8000000, 24, false);
 
     for(String s : lst)
     {
@@ -109,11 +109,5 @@ public class BloomTest
       System.out.println(nope);
       Assert.assertFalse(bf.check(nope));
     }
-    
-
-
   }
-
-
-
 }

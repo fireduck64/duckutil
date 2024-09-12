@@ -14,13 +14,18 @@ public class BloomFilter
   public BloomFilter(File back, long filter_size_bits, int k_hashes)
     throws Exception
   {
+    this(back, filter_size_bits, k_hashes, true);
+  }
+  public BloomFilter(File back, long filter_size_bits, int k_hashes, boolean enable_writes)
+    throws Exception
+  {
     this.filter_size_bits = filter_size_bits;
     this.k_hashes = k_hashes;
 
     long sz = filter_size_bits/8L;
     if (filter_size_bits % 8 != 0) sz++;
 
-    this.bit_file = new LongMappedBuffer(back, sz);
+    this.bit_file = new LongMappedBuffer(back, sz, enable_writes);
 
     set_buffer = new TreeSet<Long>();
 

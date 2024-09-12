@@ -20,7 +20,21 @@ public class LongMappedBuffer implements LongFile
   public LongMappedBuffer(File f, long total_size)
     throws IOException
   {
-    RandomAccessFile raf = new RandomAccessFile(f, "rw");
+    this(f, total_size, true);
+  }
+  public LongMappedBuffer(File f, long total_size, boolean enable_write)
+    throws IOException
+  {
+    String mode = "r";
+    FileChannel.MapMode fc_mode = FileChannel.MapMode.READ_ONLY;
+
+    if(enable_write)
+    {
+      mode="rw";
+      fc_mode = FileChannel.MapMode.READ_WRITE;
+    }
+
+    RandomAccessFile raf = new RandomAccessFile(f, mode);
     FileChannel chan = raf.getChannel();
 
     this.total_size = total_size;
@@ -31,7 +45,7 @@ public class LongMappedBuffer implements LongFile
     while(opened < total_size)
     {
       long len = Math.min(total_size - opened, MAP_SIZE);
-      MappedByteBuffer buf = chan.map(FileChannel.MapMode.READ_WRITE, opened, len);
+      MappedByteBuffer buf = chan.map(fc_mode, opened, len);
 
       opened += len;
 
