@@ -14,11 +14,15 @@ public class ConfigJson extends Config
     private String env_override_prefix;
     private JSONObject props;
 
-
     public ConfigJson(String file_name)
         throws java.io.IOException, net.minidev.json.parser.ParseException
     {
       this(file_name, null);
+    }
+
+    public ConfigJson(JSONObject json)
+    {
+        props = json;
     }
 
     /** 
@@ -82,6 +86,27 @@ public class ConfigJson extends Config
       }
 
       throw new RuntimeException("getList for " + key + " and it is " + props.get(key).getClass());
+    }
+
+    public List<ConfigJson> getJsonList(String key)
+    {
+      if (!props.containsKey(key)) return null;
+
+      if (props.get(key) instanceof JSONArray)
+      {
+        JSONArray js_arr = (JSONArray) props.get(key);
+        List<ConfigJson> lst = new LinkedList<>();
+
+        for(Object o : js_arr)
+        {
+          JSONObject jo = (JSONObject) o;
+          lst.add( new ConfigJson(jo));
+        }
+        return lst;
+      }
+
+      throw new RuntimeException("getList for " + key + " and it is " + props.get(key).getClass());
+
     }
 
     /** Returns Primitive Type, or String, Or JsonObject or JsonArray */
